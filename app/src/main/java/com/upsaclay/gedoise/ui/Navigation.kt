@@ -161,6 +161,7 @@ fun Navigation(
             composable(Screen.ACCOUNT_INFOS.route) {
                 AccountInfoScreen(navController = navController)
             }
+            // mettre les routes vers les écrans
         }
     }
 }
