@@ -1,4 +1,4 @@
-package com.upsaclay.message.utils
+package com.upsaclay.message
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
