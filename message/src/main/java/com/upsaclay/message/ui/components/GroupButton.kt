@@ -34,7 +34,7 @@ fun GroupButton(modifier: Modifier = Modifier,
 
     ) {
         Text(text = stringResource(id = R.string.group_creation),
-            fontFamily = FontFamily(Font(font.roboto_regular))
+            fontFamily = FontFamily(Font(font.inter_medium))
         )
     }
 }
