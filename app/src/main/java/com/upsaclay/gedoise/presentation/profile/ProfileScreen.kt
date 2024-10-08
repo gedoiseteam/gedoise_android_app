@@ -156,6 +156,18 @@ private fun buildProfileMenuItemData(
     ),
     ClickableMenuItemData(
         text = {
+            Text(text = stringResource(id = R.string.support))
+        },
+        icon = {
+            Icon(
+                painter = painterResource(id = com.upsaclay.common.R.drawable.ic_support),
+                contentDescription = stringResource(id = R.string.support_icon_description)
+            )
+        },
+        onClick = {navController.navigate((Screen.SUPPORT.route))}
+    ),
+    ClickableMenuItemData(
+        text = {
             Text(
                 text = stringResource(id = R.string.logout),
                 color = GedoiseColor.Red
@@ -170,6 +182,7 @@ private fun buildProfileMenuItemData(
         },
         onClick = { profileViewModel.logout() }
     )
+
 )
 
 /*
@@ -273,11 +286,11 @@ private val profileMenuItemsDataFixture: ImmutableList<ClickableMenuItemData> = 
        },
        icon = {
            Icon(
-                painter = painterResource(id = com.upsaclay.common.R.drawable.ic_support),
-              contentDescription = stringResource(id = R.string.support_icon_description)
+               painter = painterResource(id = com.upsaclay.common.R.drawable.ic_support),
+               contentDescription = stringResource(id = R.string.support_icon_description)
            )
         },
-       onClick = {}
+       onClick = { }
     ),
     ClickableMenuItemData(
         text = {

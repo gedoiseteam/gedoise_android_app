@@ -8,6 +8,7 @@
     <string name="forum">Forum</string>
     <string name="profile">Profil</string>
     <string name="edit_profile">Editer profil</string>
+    <string name="send_message_support">envoyer un message au support</string>
 
     <string name="home_icon_description">Icône pour accéder à la page d\'accueil</string>
     <string name="calendar_icon_description">Icône pour accéder au calendrier</string>
