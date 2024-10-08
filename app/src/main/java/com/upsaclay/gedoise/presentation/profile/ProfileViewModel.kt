@@ -19,4 +19,8 @@ class ProfileViewModel(
             authenticationRepository.logout()
         }
     }
+    fun contactSupport()
+    {
+
+    }
 }

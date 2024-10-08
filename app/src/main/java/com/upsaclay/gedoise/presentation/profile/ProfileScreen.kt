@@ -267,31 +267,32 @@ private val profileMenuItemsDataFixture: ImmutableList<ClickableMenuItemData> = 
 //            )
 //        }
 //    ),
-//    ClickableMenuItemData(
-//        text = {
-//            Text(text = stringResource(id = R.string.support))
-//        },
-//        icon = {
-//            Icon(
-//                painter = painterResource(id = com.upsaclay.common.R.drawable.ic_support),
-//                contentDescription = stringResource(id = R.string.support_icon_description)
-//            )
-//        }
-//    ),
+   ClickableMenuItemData(
+       text = {
+            Text(text = stringResource(id = R.string.support))
+       },
+       icon = {
+           Icon(
+                painter = painterResource(id = com.upsaclay.common.R.drawable.ic_support),
+              contentDescription = stringResource(id = R.string.support_icon_description)
+           )
+        },
+       onClick = {}
+    ),
     ClickableMenuItemData(
         text = {
             Text(
                 text = stringResource(id = R.string.logout),
                 color = GedoiseColor.Red
             )
-        },
+               },
         icon = {
             Icon(
                 painter = painterResource(id = com.upsaclay.common.R.drawable.ic_logout),
                 contentDescription = stringResource(id = R.string.logout_icon_description),
                 tint = GedoiseColor.Red
             )
-        },
+               },
         onClick = {}
-    )
+               )
 )
