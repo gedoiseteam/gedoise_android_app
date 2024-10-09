@@ -30,6 +30,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 kotlinx = "1.9.0"
 spotless = "6.25.0"
+sun-mail = "1.6.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -78,6 +79,10 @@ kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotli
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx" }
+android-mail = { module = "com.sun.mail:android-mail", version.ref = "sun-mail" }
+android-activation = { module = "com.sun.mail:android-activation", version.ref = "sun-mail" }
+
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

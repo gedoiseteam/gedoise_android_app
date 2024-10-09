@@ -45,7 +45,7 @@ import com.upsaclay.gedoise.presentation.profile.ProfileViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SupportScreen(modifier: Modifier = Modifier,user: User)
+fun SupportScreen(modifier: Modifier = Modifier,user: User?)
 {
     Column{
         var objet by remember { mutableStateOf("") }
@@ -68,7 +68,7 @@ fun SupportScreen(modifier: Modifier = Modifier,user: User)
                 Spacer(modifier = Modifier.heightIn(MaterialTheme.spacing.large))
                 Button(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onClick = { viewModel.contactSupport(body,objet) },
+                    onClick = { viewModel.SendEmail(user = user, subject = body, body = objet) },
                     content = { Text(text = stringResource(id = R.string.send_message_support)) })
             }
         }

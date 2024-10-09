@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavType.Companion.StringType
@@ -248,7 +249,7 @@ fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
             AccountScreen(navController = navController)
         }
         composable(Screen.SUPPORT.route){
-            SupportScreen(user)
+            SupportScreen(user = user, modifier = Modifier)
         }
     }
 }

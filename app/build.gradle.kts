@@ -85,11 +85,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.android.mail)
+    implementation(libs.android.activation)
+
 
     implementation(project(":authentication"))
     implementation(project(":authentication:domain"))
     implementation(project(":authentication:data"))
-
     implementation(project(":common"))
     implementation(project(":common:domain"))
     implementation(project(":common:data"))
