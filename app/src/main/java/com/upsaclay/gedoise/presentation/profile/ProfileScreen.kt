@@ -203,6 +203,7 @@ fun ProfileScreenPreview() {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .fillMaxSize()
                     .padding(top = it.calculateTopPadding())
             ) {
                 if (isLoading) {
@@ -255,7 +256,7 @@ fun ProfileScreenPreview() {
         }
     }
 }
-
+// pourquoi ?
 private val profileMenuItemsDataFixture: ImmutableList<ClickableMenuItemData> = persistentListOf(
     ClickableMenuItemData(
         text = { Text(text = stringResource(id = R.string.account_informations)) },
