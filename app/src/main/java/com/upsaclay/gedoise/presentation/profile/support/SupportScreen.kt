@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,7 +51,8 @@ fun SupportScreen(modifier: Modifier = Modifier, navController: NavController)
     Column{
         var objet by remember { mutableStateOf("") }
         var body by remember { mutableStateOf("") }
-        val viewModel : SupportViewModel = SupportViewModel()
+        val context = LocalContext.current
+        val viewModel : SupportViewModel = SupportViewModel(context)
         Scaffold (topBar = { TopAppBar(navController = navController) }) {
             Column(
                 modifier = Modifier
