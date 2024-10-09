@@ -248,7 +248,7 @@ fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
             AccountScreen(navController = navController)
         }
         composable(Screen.SUPPORT.route){
-            SupportScreen(user)
+            SupportScreen(navController = navController)
         }
     }
 }

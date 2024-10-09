@@ -7,12 +7,13 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 
-class SupportViewModel(contexte: Context) : ViewModel() {
+class SupportViewModel(@SuppressLint("StaticFieldLeak") var contexte: Context) : ViewModel() {
     @SuppressLint("QueryPermissionsNeeded")
     fun contactSupport(message: String, objet: String) {
         // Encodage des paramètres pour éviter les erreurs dans l'URI
         val encodedSubject = Uri.encode(objet)
         val encodedBody = Uri.encode(message)
+
 
         // Correction de l'URI
         val uri = Uri.parse("mailto:application.ged@gmail.com?subject=$encodedSubject&body=$encodedBody")
@@ -23,7 +24,7 @@ class SupportViewModel(contexte: Context) : ViewModel() {
         }
 
         // Vérifier si une application peut gérer l'intention
-        if (emailIntent.resolveActivity(context.packageManager) != null) {
+        if (emailIntent.resolveActivity(contexte.packageManager) != null) {
             contexte.startActivity(emailIntent) // Utilisation du contexte passé
         } else {
             // Gérer le cas où aucune application n'est disponible pour envoyer des e-mails

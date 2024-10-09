@@ -27,4 +27,5 @@ val appModule = module {
     viewModelOf(::MainViewModel)
     viewModelOf(::ProfileViewModel)
     viewModelOf(::AccountViewModel)
+    // rajouter SupportViewModel
 }

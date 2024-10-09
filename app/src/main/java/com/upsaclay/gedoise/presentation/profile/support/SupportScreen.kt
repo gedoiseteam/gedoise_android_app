@@ -45,13 +45,13 @@ import com.upsaclay.gedoise.presentation.profile.ProfileViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SupportScreen(modifier: Modifier = Modifier,user: User)
+fun SupportScreen(modifier: Modifier = Modifier, navController: NavController)
 {
     Column{
         var objet by remember { mutableStateOf("") }
         var body by remember { mutableStateOf("") }
         val viewModel : SupportViewModel = SupportViewModel()
-        Scaffold (topBar = { TopAppBar(navController = rememberNavController()) }) {
+        Scaffold (topBar = { TopAppBar(navController = navController) }) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
