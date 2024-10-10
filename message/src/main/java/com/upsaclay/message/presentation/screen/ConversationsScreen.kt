@@ -61,8 +61,11 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ConversationScreen(navController: NavController, conversationViewModel: ConversationViewModel = koinViewModel()) {
-    val conversations = conversationViewModel.conversations.collectAsState(emptyList()).value
+fun ConversationScreen(
+    navController: NavController,
+    conversationViewModel : ConversationViewModel = koinViewModel()
+) {
+    val conversations by conversationViewModel.conversations.collectAsState(emptyList())
     var expanded by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {

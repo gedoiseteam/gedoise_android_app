@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,8 +21,12 @@ import com.upsaclay.message.presentation.components.UserItem
 import com.upsaclay.message.presentation.viewmodel.ConversationViewModel
 
 @Composable
-fun CreateConversationScreen(modifier: Modifier = Modifier, navController: NavController, conversationViewModel: ConversationViewModel) {
-    val users = conversationViewModel.users.collectAsState(emptyList()).value
+fun CreateConversationScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    conversationViewModel: ConversationViewModel
+) {
+    val users by conversationViewModel.users.collectAsState(emptyList())
 
     LaunchedEffect(Unit) {
         conversationViewModel.fetchAllUsers()
@@ -32,8 +37,8 @@ fun CreateConversationScreen(modifier: Modifier = Modifier, navController: NavCo
             UserItem(
                 user = user,
                 onClick = {
-                    navController.navigate(com.upsaclay.common.domain.model.Screen.CHAT.route + "?userId=${user.id}") {
-                        popUpTo(com.upsaclay.common.domain.model.Screen.CREATE_CONVERSATION.route) { inclusive = true }
+                    navController.navigate(Screen.CHAT.route + "?userId=${user.id}") {
+                        popUpTo(Screen.CREATE_CONVERSATION.route) { inclusive = true }
                         launchSingleTop = true
                     }
                 }

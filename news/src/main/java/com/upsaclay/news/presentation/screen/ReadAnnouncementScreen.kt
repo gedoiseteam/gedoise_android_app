@@ -52,6 +52,8 @@ import com.upsaclay.common.presentation.theme.spacing
 import com.upsaclay.common.utils.showToast
 import com.upsaclay.news.R
 import com.upsaclay.news.announcementFixture
+import com.upsaclay.news.domain.model.Announcement
+import com.upsaclay.news.domain.model.AnnouncementState
 import com.upsaclay.news.presentation.components.AnnouncementItem
 import com.upsaclay.news.presentation.viewmodel.NewsViewModel
 import kotlinx.coroutines.launch
@@ -59,11 +61,15 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReadAnnouncementScreen(modifier: Modifier = Modifier, navController: NavController, newsViewModel: NewsViewModel = koinViewModel()) {
+fun ReadAnnouncementScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    newsViewModel: NewsViewModel = koinViewModel()
+) {
     val displayAnnouncement = newsViewModel.displayedAnnouncement
 
-    if (displayAnnouncement == null) {
-        newsViewModel.updateAnnouncementState(com.upsaclay.news.domain.model.AnnouncementState.ANNOUNCEMENT_DISPLAY_ERROR)
+    if(displayAnnouncement == null) {
+        newsViewModel.updateAnnouncementState(AnnouncementState.ANNOUNCEMENT_DISPLAY_ERROR)
         navController.popBackStack()
     }
 
@@ -79,9 +85,8 @@ fun ReadAnnouncementScreen(modifier: Modifier = Modifier, navController: NavCont
     var showLoadingDialog by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
-    val user = newsViewModel.user.collectAsState(initial = null).value
-    val state =
-        newsViewModel.announcementState.collectAsState(initial = com.upsaclay.news.domain.model.AnnouncementState.DEFAULT).value
+    val user by newsViewModel.user.collectAsState(initial = null)
+    val state by newsViewModel.announcementState.collectAsState(initial = AnnouncementState.DEFAULT)
     val hideBottomSheet: () -> Unit = {
         scope.launch { sheetState.hide() }.invokeOnCompletion {
             if (!sheetState.isVisible) {
@@ -92,17 +97,17 @@ fun ReadAnnouncementScreen(modifier: Modifier = Modifier, navController: NavCont
 
     LaunchedEffect(state) {
         when (state) {
-            com.upsaclay.news.domain.model.AnnouncementState.ANNOUNCEMENT_DELETE_ERROR -> {
+            AnnouncementState.ANNOUNCEMENT_DELETE_ERROR -> {
                 showLoadingDialog = false
                 showToast(context, R.string.announcement_delete_error)
             }
 
-            com.upsaclay.news.domain.model.AnnouncementState.ANNOUNCEMENT_DELETED -> {
+            AnnouncementState.ANNOUNCEMENT_DELETED -> {
                 showLoadingDialog = false
                 navController.popBackStack()
             }
 
-            com.upsaclay.news.domain.model.AnnouncementState.LOADING -> showLoadingDialog = true
+            AnnouncementState.LOADING -> showLoadingDialog = true
 
             else -> {}
         }
@@ -166,7 +171,7 @@ fun ReadAnnouncementScreen(modifier: Modifier = Modifier, navController: NavCont
                 )
                 .verticalScroll(rememberScrollState())
         ) {
-            if (user.isMember && announcement.author == user) {
+            if (it.isMember && announcement.author == it) {
                 EditableTopSection(
                     announcement = announcement,
                     onEditClick = { showBottomSheet = true }
@@ -202,7 +207,10 @@ fun ReadAnnouncementScreen(modifier: Modifier = Modifier, navController: NavCont
 }
 
 @Composable
-private fun EditableTopSection(announcement: com.upsaclay.news.domain.model.Announcement, onEditClick: () -> Unit) {
+private fun EditableTopSection(
+    announcement: Announcement,
+    onEditClick: () -> Unit
+) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         AnnouncementItem(
             announcement = announcement,
@@ -251,7 +259,10 @@ private fun EditAnnouncementModelBottomSheet(
 }
 
 @Composable
-private fun DeleteAnnouncementDialog(onConfirm: () -> Unit, onCancel: () -> Unit) {
+private fun DeleteAnnouncementDialog(
+    onConfirm: () -> Unit,
+    onCancel: () -> Unit
+) {
     SensibleActionDialog(
         text = stringResource(id = R.string.delete_announcement_dialog_text),
         onDismiss = onCancel,

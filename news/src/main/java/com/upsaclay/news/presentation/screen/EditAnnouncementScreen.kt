@@ -34,37 +34,39 @@ import com.upsaclay.common.presentation.theme.spacing
 import com.upsaclay.common.utils.showToast
 import com.upsaclay.news.R
 import com.upsaclay.news.announcementFixture
+import com.upsaclay.news.domain.model.AnnouncementState
 import com.upsaclay.news.presentation.viewmodel.EditAnnouncementViewModel
 import java.time.LocalDateTime
 
 @Composable
-fun EditAnnouncementScreen(navController: NavController, editAnnouncementViewModel: EditAnnouncementViewModel) {
+fun EditAnnouncementScreen(
+    navController: NavController,
+    editAnnouncementViewModel: EditAnnouncementViewModel
+) {
     val context = LocalContext.current
-    val state =
-        editAnnouncementViewModel.announcementState.collectAsState(com.upsaclay.news.domain.model.AnnouncementState.DEFAULT).value
+    val state = editAnnouncementViewModel.announcementState.collectAsState(AnnouncementState.DEFAULT).value
     val title: String = editAnnouncementViewModel.title
     val content: String = editAnnouncementViewModel.content
-    val isAnnouncementModified =
-        editAnnouncementViewModel.isAnnouncementModified.collectAsState(initial = false).value
+    val isAnnouncementModified = editAnnouncementViewModel.isAnnouncementModified.collectAsState(initial = false).value
     var showLoadingDialog by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(state) {
         when (state) {
-            com.upsaclay.news.domain.model.AnnouncementState.ANNOUNCEMENT_UPDATE_ERROR -> {
+            AnnouncementState.ANNOUNCEMENT_UPDATE_ERROR -> {
                 showLoadingDialog = false
                 showToast(context, R.string.announcement_update_error)
             }
 
-            com.upsaclay.news.domain.model.AnnouncementState.ANNOUNCEMENT_UPDATED -> {
+            AnnouncementState.ANNOUNCEMENT_UPDATED -> {
                 showLoadingDialog = false
                 focusManager.clearFocus()
                 keyboardController?.hide()
                 navController.popBackStack()
             }
 
-            com.upsaclay.news.domain.model.AnnouncementState.LOADING -> showLoadingDialog = true
+            AnnouncementState.LOADING -> showLoadingDialog = true
 
             else -> {}
         }

@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,21 +32,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.upsaclay.common.domain.model.Screen
 import com.upsaclay.common.presentation.components.PullToRefreshComponent
 import com.upsaclay.common.presentation.theme.GedoiseTheme
 import com.upsaclay.common.presentation.theme.spacing
 import com.upsaclay.news.R
 import com.upsaclay.news.announcementsFixture
+import com.upsaclay.news.domain.model.Announcement
 import com.upsaclay.news.presentation.components.AnnouncementItemWithContent
 import com.upsaclay.news.presentation.viewmodel.NewsViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NewsScreen(newsViewModel: NewsViewModel = koinViewModel(), navController: NavController) {
-    val announcements = newsViewModel.announcements.collectAsState(emptyList()).value
-    val user = newsViewModel.user.collectAsState(null).value
+fun NewsScreen(
+    newsViewModel: NewsViewModel = koinViewModel(),
+    navController: NavController
+) {
+    val announcements by newsViewModel.announcements.collectAsState(emptyList())
+    val user by newsViewModel.user.collectAsState(null)
     val isRefreshing = newsViewModel.isRefreshing
-    val onlineUsers = newsViewModel.onlineUsers.collectAsState().value
+    val onlineUsers by newsViewModel.onlineUsers.collectAsState()
 
     LaunchedEffect(Unit) {
         newsViewModel.resetAnnouncementState()
@@ -67,15 +73,14 @@ fun NewsScreen(newsViewModel: NewsViewModel = koinViewModel(), navController: Na
                     announcements = announcements,
                     onClickAnnouncement = { announcement ->
                         newsViewModel.setDisplayedAnnouncement(announcement)
-                        navController.navigate(com.upsaclay.common.domain.model.Screen.READ_ANNOUNCEMENT.route)
+                        navController.navigate(Screen.READ_ANNOUNCEMENT.route)
                     }
                 )
                 PostSection()
             }
 
-            if (user.isMember) {
-                Box(
-                    modifier = Modifier
+            if(it.isMember) {
+                Box(modifier = Modifier
                         .padding(MaterialTheme.spacing.medium)
                         .fillMaxSize()
                 ) {
@@ -89,7 +94,7 @@ fun NewsScreen(newsViewModel: NewsViewModel = koinViewModel(), navController: Na
                                 stringResource(id = R.string.new_announcement)
                             )
                         },
-                        onClick = { navController.navigate(com.upsaclay.common.domain.model.Screen.CREATE_ANNOUNCEMENT.route) }
+                        onClick = { navController.navigate(Screen.CREATE_ANNOUNCEMENT.route) }
                     )
                 }
             }
@@ -115,8 +120,8 @@ fun NewsScreen(newsViewModel: NewsViewModel = koinViewModel(), navController: Na
 
 @Composable
 private fun RecentAnnouncementSection(
-    announcements: List<com.upsaclay.news.domain.model.Announcement>,
-    onClickAnnouncement: (com.upsaclay.news.domain.model.Announcement) -> Unit
+    announcements: List<Announcement>,
+    onClickAnnouncement: (Announcement) -> Unit
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val sortedAnnouncements = announcements.sortedByDescending { it.date }

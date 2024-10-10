@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,8 +51,11 @@ import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ProfileScreen(navController: NavController, profileViewModel: ProfileViewModel = koinViewModel()) {
-    val user = profileViewModel.user.collectAsState(initial = null).value
+fun ProfileScreen(
+    navController: NavController,
+    profileViewModel: ProfileViewModel = koinViewModel()
+) {
+    val user by profileViewModel.user.collectAsState(initial = null)
     val clickableMenuItemsData: ImmutableList<ClickableMenuItemData> =
         buildProfileMenuItemData(navController, profileViewModel)
 
@@ -67,8 +71,7 @@ fun ProfileScreen(navController: NavController, profileViewModel: ProfileViewMod
                 Column {
                     TopSection(
                         profilePictureUrl = user.profilePictureUrl,
-                        userFullName = user.fullName,
-                        userEmail = user.email
+                        userFullName = user.fullName
                     )
 
                     HorizontalDivider()
@@ -91,7 +94,10 @@ fun ProfileScreen(navController: NavController, profileViewModel: ProfileViewMod
 }
 
 @Composable
-private fun TopSection(profilePictureUrl: String?, userFullName: String, userEmail: String) {
+private fun TopSection(
+    profilePictureUrl: String?,
+    userFullName: String
+) {
     Column {
         Row(
             modifier = Modifier
@@ -142,35 +148,37 @@ fun ProfileTopBar(navController: NavController) {
 private fun buildProfileMenuItemData(
     navController: NavController,
     profileViewModel: ProfileViewModel
-): ImmutableList<ClickableMenuItemData> = persistentListOf(
-    ClickableMenuItemData(
-        text = { Text(text = stringResource(id = R.string.account_informations)) },
-        icon = {
-            Icon(
-                modifier = Modifier.size(28.dp),
-                painter = painterResource(id = com.upsaclay.common.R.drawable.ic_person),
-                contentDescription = stringResource(id = R.string.account_icon_description)
-            )
-        },
-        onClick = { navController.navigate(Screen.ACCOUNT.route) }
-    ),
-    ClickableMenuItemData(
-        text = {
-            Text(
-                text = stringResource(id = R.string.logout),
-                color = GedoiseColor.Red
-            )
-        },
-        icon = {
-            Icon(
-                painter = painterResource(id = com.upsaclay.common.R.drawable.ic_logout),
-                contentDescription = stringResource(id = R.string.logout_icon_description),
-                tint = GedoiseColor.Red
-            )
-        },
-        onClick = { profileViewModel.logout() }
+): ImmutableList<ClickableMenuItemData> {
+    return persistentListOf(
+        ClickableMenuItemData(
+            text = { Text(text = stringResource(id = R.string.account_informations)) },
+            icon = {
+                Icon(
+                    modifier = Modifier.size(28.dp),
+                    painter = painterResource(id = com.upsaclay.common.R.drawable.ic_person),
+                    contentDescription = stringResource(id = R.string.account_icon_description),
+                )
+            },
+            onClick = { navController.navigate(Screen.ACCOUNT.route) }
+        ),
+        ClickableMenuItemData(
+            text = {
+                Text(
+                    text = stringResource(id = R.string.logout),
+                    color = GedoiseColor.Red
+                )
+            },
+            icon = {
+                Icon(
+                    painter = painterResource(id = com.upsaclay.common.R.drawable.ic_logout),
+                    contentDescription = stringResource(id = R.string.logout_icon_description),
+                    tint = GedoiseColor.Red
+                )
+            },
+            onClick = { profileViewModel.logout() }
+        )
     )
-)
+}
 
 /*
  =====================================================================

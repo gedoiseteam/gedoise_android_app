@@ -6,6 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -43,8 +44,8 @@ import org.koin.java.KoinJavaComponent.inject
 @Composable
 fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
     val navController = rememberNavController()
-    val user = mainViewModel.user.collectAsState(null).value
-    val isAuthenticated = mainViewModel.isAuthenticated.collectAsState(false).value
+    val user by mainViewModel.user.collectAsState(null)
+    val isAuthenticated by mainViewModel.isAuthenticated.collectAsState(false)
 
     val sharedRegistrationViewModel: RegistrationViewModel = koinViewModel()
     val sharedNewsViewModel: NewsViewModel = koinViewModel()
@@ -93,7 +94,7 @@ fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
                 MainNavigationBars(
                     navController = navController,
                     bottomNavigationItems = mainViewModel.bottomNavigationItem.values.toList(),
-                    user = user
+                    user = it
                 ) {
                     NewsScreen(
                         navController = navController,
@@ -122,7 +123,7 @@ fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
 
         composable(Screen.CREATE_ANNOUNCEMENT.route) {
             user?.let {
-                CreateAnnouncementScreen(navController = navController, user = user)
+                CreateAnnouncementScreen(navController = navController, user = it)
             }
         }
 
@@ -149,7 +150,7 @@ fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
                 MainNavigationBars(
                     navController = navController,
                     bottomNavigationItems = mainViewModel.bottomNavigationItem.values.toList(),
-                    user = user
+                    user = it
                 ) {
                     ConversationScreen(
                         navController = navController,
@@ -220,7 +221,7 @@ fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
                 MainNavigationBars(
                     navController = navController,
                     bottomNavigationItems = mainViewModel.bottomNavigationItem.values.toList(),
-                    user = user
+                    user = it
                 ) {
                     Text(text = "Calendar")
                 }
@@ -232,7 +233,7 @@ fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
                 MainNavigationBars(
                     navController = navController,
                     bottomNavigationItems = mainViewModel.bottomNavigationItem.values.toList(),
-                    user = user
+                    user = it
                 ) {
                     Text(text = "Forum")
                 }
