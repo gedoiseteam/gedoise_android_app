@@ -25,6 +25,7 @@ import com.upsaclay.common.presentation.components.SmallTopBarBack
 import com.upsaclay.gedoise.data.BottomNavigationItem
 import com.upsaclay.gedoise.presentation.profile.ProfileScreen
 import com.upsaclay.gedoise.presentation.profile.account.AccountScreen
+import com.upsaclay.gedoise.presentation.profile.support.SupportScreen
 import com.upsaclay.message.presentation.screen.ConversationScreen
 import com.upsaclay.message.presentation.screen.CreateConversationScreen
 import com.upsaclay.message.presentation.screen.CreateGroupConversationScreen
@@ -245,6 +246,9 @@ fun Navigation(mainViewModel: MainViewModel = koinViewModel()) {
 
         composable(Screen.ACCOUNT.route) {
             AccountScreen(navController = navController)
+        }
+        composable(Screen.SUPPORT.route){
+            SupportScreen(navController = navController)
         }
     }
 }
